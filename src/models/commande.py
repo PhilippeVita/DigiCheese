@@ -15,13 +15,15 @@ class CommandeBase(SQLModel):  # Schéma de validation
     bstock: int | None = Field(default=0, nullable=True)
 
 """Table representant les commandes passees par les clients."""
-class Commande(SQLModel, table=True):
+class Commande(CommandeBase, table=True):
     __tablename__ = "t_entcde"
     codcde: int | None = Field(default=None, primary_key=True)
 
+"""Schema de validation pour la creation d'une nouvelle commande."""
 class CommandePost(CommandeBase):
     pass
 
+"""Schema de validation pour la mise a jour d'une commande existante."""
 class CommandePatch(CommandeBase):
     datcde: date | None = Field(default=None, nullable=True)
     codcli: int | None = Field(default=None, foreign_key="t_client.codcli", nullable=True)

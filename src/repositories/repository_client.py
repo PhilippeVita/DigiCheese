@@ -1,7 +1,7 @@
-from ..models import Client
+from ..models import Client, ClientPost, ClientPatch
 from sqlmodel import Session, select
 
-class ClientRepository:
+class RepositoryClient:
     def __init__(self, session: Session):
         self.session = session
 
@@ -9,11 +9,12 @@ class ClientRepository:
         statement= select(Client)
         return self.session.exec(statement).all()
 
-   """ def get_client_by_id(self, client_id: int):
-        return self.session.query(Client).filter(Client.id == client_id).first()
+    def get_client_by_id(self, client_id: int):
+        statement = select(Client).where(Client.id == client_id)
+        return self.session.exec(statement).first()
 
     def create_client(self, client_data: ClientPost):
-        client = Client.from_orm(client_data)
+        client = Client.model_validate(client_data)
         self.session.add(client)
         self.session.commit()
         self.session.refresh(client)
@@ -23,7 +24,7 @@ class ClientRepository:
         client = self.get_client_by_id(client_id)
         if not client:
             return None
-        for key, value in client_data.dict(exclude_unset=True).items():
+        for key, value in client_data.model_dump(exclude_unset=True).items():
             setattr(client, key, value)
         self.session.commit()
         self.session.refresh(client)
@@ -35,4 +36,4 @@ class ClientRepository:
             return None
         self.session.delete(client)
         self.session.commit()
-        return True"""
+        return True

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from ..models import Client, ClientPost, ClientPatch
 from ..database import get_db
 from sqlmodel import Session
-from ..repositories import ClientRepository
+from ..repositories import RepositoryClient
 router_client = APIRouter()
 
 # ROUTES
