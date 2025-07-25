@@ -1,7 +1,7 @@
-from ..models import DetailCommande
+from ..models import DetailCommande, DetailCommandePost, DetailCommandePatch
 from sqlmodel import Session, select
 
-class DetailCommandeRepository:
+class RepositoryDetailCommande:
     def __init__(self, session: Session):
         self.session = session
 
@@ -10,10 +10,11 @@ class DetailCommandeRepository:
         return self.session.exec(statement).all()
 
     def get_detail_commande_by_id(self, detail_commande_id: int):
-        return self.session.query(DetailCommande).filter(DetailCommande.id == detail_commande_id).first()
+        statement = select(DetailCommande).where(DetailCommande.id == detail_commande_id)
+        return self.session.exec(statement).first()
 
     def create_detail_commande(self, detail_commande_data: DetailCommandePost):
-        detail_commande = DetailCommande.from_orm(detail_commande_data)
+        detail_commande = DetailCommande.model_validate(detail_commande_data)
         self.session.add(detail_commande)
         self.session.commit()
         self.session.refresh(detail_commande)
@@ -23,7 +24,7 @@ class DetailCommandeRepository:
         detail_commande = self.get_detail_commande_by_id(detail_commande_id)
         if not detail_commande:
             return None
-        for key, value in detail_commande_data.dict(exclude_unset=True).items():
+        for key, value in detail_commande_data.model_dump(exclude_unset=True).items():
             setattr(detail_commande, key, value)
         self.session.commit()
         self.session.refresh(detail_commande)

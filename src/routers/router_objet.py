@@ -30,6 +30,4 @@ def patch_objet(id: int, objet: ObjetPatch, session: Session = Depends(get_db)):
 def delete_objet(id: int, session: Session = Depends(get_db)):
     objet_repo = RepositoryObjet(session)
     return objet_repo.delete_objet(id)
-
-    return client_repo.get_all_clients()
     
