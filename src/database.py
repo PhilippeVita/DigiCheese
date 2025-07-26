@@ -26,6 +26,19 @@ def get_db():
         yield db
     finally:
         db.close()
-        
+
+# from sqlmodel import Session, SQLModel, create_engine
+# from contextlib import contextmanager
+
+# DATABASE_URL = f"{DB_CONFIG['connector']}://{DB_CONFIG['username']}:{DB_CONFIG['password']}@{DB_CONFIG['host']}/{DB_CONFIG['database']}"  
+# engine = create_engine(DATABASE_URL, echo=False)
+
+# def get_session():
+#     with Session(engine) as session:
+#         try:
+#             yield session
+#         finally:
+#             session.close()
+
 # Il est possible de créer des fonctions utilitaires pour supprimer et recréer la base de données
 # Attention à ne pas essayer de se connecter à la base de données pendant cette opération (DATABASE_URL)
