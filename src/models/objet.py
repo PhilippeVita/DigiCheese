@@ -1,6 +1,6 @@
 from decimal import Decimal  
 from typing import List
-from sqlmodel import Relationship, SQLModel, Field
+from sqlmodel import SQLModel, Field
 
 class ObjetBase(SQLModel):
     """Schema de base representant les objets disponibles dans la fromagerie."""

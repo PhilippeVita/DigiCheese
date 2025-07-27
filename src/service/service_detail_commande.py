@@ -3,7 +3,7 @@ from ..repositories import RepositoryDetailCommande
 from ..models import DetailCommandePost, DetailCommandePatch, DetailCommande
 
 # Traitement des données de detail de commande
-class DetailCommandeService: 
+class ServiceDetailCommande: 
     def __init__(self, session: Session): 
         self.repository = RepositoryDetailCommande(session) 
     
