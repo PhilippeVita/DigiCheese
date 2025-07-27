@@ -3,6 +3,7 @@ from ..repositories import RepositoryDetailCommande
 from ..models import DetailCommandePost, DetailCommandePatch, DetailCommande
 
 # Traitement des données de detail de commande
+# Cette classe applique des transformations et des règles métier pour les opérations sur les détails de commande
 class ServiceDetailCommande: 
     def __init__(self, session: Session): 
         self.repository = RepositoryDetailCommande(session) 

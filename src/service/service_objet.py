@@ -1,8 +1,9 @@
 from sqlmodel import Session 
 from ..repositories import RepositoryObjet 
 from ..models import ObjetPost, ObjetPatch, Objet
+
 # Classe ServiceObjet
-# Cette classe encapsule la logique métier pour les opérations sur les objets
+# Cette classe applique des transformations et des règles métier pour les opérations sur les objets
 class ServiceObjet: 
     def __init__(self, session: Session): 
         self.repository = RepositoryObjet(session) 

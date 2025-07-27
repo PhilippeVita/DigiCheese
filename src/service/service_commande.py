@@ -2,6 +2,8 @@ from sqlmodel import Session
 from ..repositories import RepositoryCommande 
 from ..models import CommandePost, CommandePatch, Commande 
 
+# Classe ServiceCommande
+# Cette classe applique des transformations et des règles métier pour les opérations sur les commandes
 class ServiceCommande: 
     def __init__(self, session: Session): 
         self.repository = RepositoryCommande(session) 

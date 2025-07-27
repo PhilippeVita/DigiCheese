@@ -1,12 +1,14 @@
 from sqlmodel import Session 
 from ..repositories import RepositoryClient 
 from ..models import ClientPost, ClientPatch, Client 
+
 # Classe ServiceClient
 # Cette classe encapsule la logique métier pour les opérations sur les clients
 class ServiceClient: 
     def __init__(self, session: Session): 
         # Initialise le repository avec la session de base de données
         self.repository = RepositoryClient(session) 
+
 # Traitement des données du client
     # Cette méthode applique des transformations sur les données du client
     def __traitement(self, client: Client) -> Client:
