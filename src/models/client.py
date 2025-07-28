@@ -8,7 +8,7 @@ class ClientBase(SQLModel):
     adresse1cli: str | None = Field(default=None, max_length=50, nullable=True)
     adresse2cli: str | None = Field(default=None, max_length=50, nullable=True)
     adresse3cli: str | None = Field(default=None, max_length=50, nullable=True)
-    villecli_id: int | None = Field(default=None, foreign_key="t_communes.id", nullable=True)
+    villecli_id: int | None = Field(default=None,  nullable=True)
     telcli: str | None = Field(default=None, max_length=10, nullable=True)
     emailcli: str | None = Field(default=None, max_length=255, nullable=True)
     portcli: str | None = Field(default=None, max_length=10, nullable=True)

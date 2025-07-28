@@ -1,9 +1,9 @@
 from decimal import Decimal  
 from typing import List
-from sqlmodel import Relationship, SQLModel, Field
+from sqlmodel import SQLModel, Field
 
+"""Schema de base representant les objets disponibles dans la fromagerie."""
 class ObjetBase(SQLModel):
-    """Schema de base representant les objets disponibles dans la fromagerie."""
     libobj: str | None = Field(default=None, max_length=50, nullable=True)
     tailleobj: str | None = Field(default=None, max_length=50, nullable=True)
     puobj: Decimal = Field(default=Decimal("0.0000"), nullable=False)
@@ -20,9 +20,10 @@ class Objet(ObjetBase, table=True):
     __tablename__ = "t_objet"
     codobj: int | None = Field(default=None, primary_key=True)
 
+"""Schema de validation pour la creation d'un nouvel objet."""
 class ObjetPost(ObjetBase):
-    """Schema de validation pour la creation d'un nouvel objet."""
     pass
+
+"""Schema de validation pour la mise à jour d'un objet existant."""
 class ObjetPatch(ObjetBase):
-    """Schema de validation pour la mise à jour d'un objet existant."""
     pass
