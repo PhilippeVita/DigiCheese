@@ -10,3 +10,6 @@ img/
 .venv
 .pytest_cache/
 *.db
+.env
+__pycache__/
+*.pyc
