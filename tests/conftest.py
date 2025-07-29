@@ -5,12 +5,12 @@ from fastapi.testclient import TestClient
 from sqlmodel import SQLModel, Session, create_engine
 from dotenv import load_dotenv
 from datetime import date
-from src.models import Client, Commande, DetailCommande, Objet, Commune, Departement
 
 
 # Ajout du dossier source au path
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
+# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+from src.models import Client, Commande, DetailCommande, Objet, Commune, Departement
 from src.main import app
 from src.database import get_session
 

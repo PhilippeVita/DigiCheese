@@ -1,21 +1,25 @@
 from sqlmodel import create_engine, Session
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Configuration de la base de données
 DB_CONFIG = {
     "connector": "mysql+pymysql",
     "username": "root",
-    "password": "",
+    "password": "root",
     "host": "localhost",
+    "port": "3306",
     "database": "Digicheese"
 }
 
 # URL de connexion à la base de données
 DATABASE_URL = (
     f"{DB_CONFIG['connector']}://{DB_CONFIG['username']}:{DB_CONFIG['password']}"
-    f"@{DB_CONFIG['host']}/{DB_CONFIG['database']}"
+    f"@{DB_CONFIG['host']}:{DB_CONFIG['port']}/{DB_CONFIG['database']}"
 )
 
 # Création de l'engine SQLModel
@@ -25,13 +29,6 @@ engine = create_engine(DATABASE_URL, echo=False)
 def get_session():
     with Session(engine) as session:
         yield session
-
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 

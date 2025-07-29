@@ -9,6 +9,7 @@ from .models import (
     DetailCommande,
 )
 app = FastAPI()
+SQLModel.metadata.drop_all(bind=engine)
 SQLModel.metadata.create_all(bind=engine)
 app.include_router(global_router)
 @app.get("/")
