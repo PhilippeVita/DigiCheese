@@ -9,11 +9,11 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # Configuration de la base de données
 DB_CONFIG = {
     "connector": "mysql+pymysql",
-    "username": "root",
-    "password": "root",
-    "host": "localhost",
-    "port": "3306",
-    "database": "Digicheese"
+    "username": os.getenv("DATABASE_USERNAME"),
+    "password": os.getenv("DATABASE_PASSWORD"),
+    "host": os.getenv("DATABASE_HOST"),
+    "port": os.getenv("DATABASE_PORT"),
+    "database": os.getenv("DATABASE_NAME")
 }
 
 # URL de connexion à la base de données
