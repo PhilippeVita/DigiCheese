@@ -1,19 +1,21 @@
 from decimal import Decimal  
 from typing import List
 from sqlmodel import SQLModel, Field
+from typing import Optional
+
 
 """Schema de base representant les objets disponibles dans la fromagerie."""
 class ObjetBase(SQLModel):
-    libobj: str | None = Field(default=None, max_length=50, nullable=True)
-    tailleobj: str | None = Field(default=None, max_length=50, nullable=True)
+    libobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
+    tailleobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
     puobj: Decimal = Field(default=Decimal("0.0000"), nullable=False)
     poidsobj: Decimal = Field(default=Decimal("0.0000"), nullable=False)
-    indispobj: int = Field(default=0)
-    o_imp: int = Field(default=0)
-    o_aff: int = Field(default=0)
-    o_cartp: int = Field(default=0)
-    points: int = Field(default=0)
-    o_ordre_aff: int = Field(default=0)
+    indispobj: Optional[int] = Field(default=0)
+    o_imp: Optional[int] = Field(default=0)
+    o_aff: Optional[int] = Field(default=0)
+    o_cartp: Optional[int] = Field(default=0)
+    points: Optional[int] = Field(default=0)
+    o_ordre_aff: Optional[int] = Field(default=0)
 
 """Table representant les objets disponibles dans la fromagerie."""
 class Objet(ObjetBase, table=True):
@@ -26,4 +28,14 @@ class ObjetPost(ObjetBase):
 
 """Schema de validation pour la mise à jour d'un objet existant."""
 class ObjetPatch(ObjetBase):
-    pass
+    libobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
+    tailleobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
+    puobj: Optional[Decimal] = Field(default=Decimal("0.0000"), nullable=False)
+    poidsobj: Optional[Decimal] = Field(default=Decimal("0.0000"), nullable=False)
+    indispobj: Optional[int] = Field(default=0)
+    o_imp: Optional[int] = Field(default=0)
+    o_aff: Optional[int] = Field(default=0)
+    o_cartp: Optional[int] = Field(default=0)
+    points: Optional[int] = Field(default=0)
+    o_ordre_aff: Optional[int] = Field(default=0)
+    

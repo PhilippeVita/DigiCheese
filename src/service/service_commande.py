@@ -1,6 +1,7 @@
 from sqlmodel import Session 
 from ..repositories import RepositoryCommande 
 from ..models import CommandePost, CommandePatch, Commande 
+from datetime import date
 
 # Classe ServiceCommande
 # Cette classe applique des transformations et des règles métier pour les opérations sur les commandes
