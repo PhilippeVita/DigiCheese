@@ -12,8 +12,6 @@ router_detail_commande = APIRouter(
     tags=["detail-commandes"]
 )
 
-
-
 # Récupère tous les détails de commandes
 @router_detail_commande.get("/")
 def get_detail_commandes(session: Session = Depends(get_session)):

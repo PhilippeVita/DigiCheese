@@ -8,6 +8,7 @@ from .models import (
     Objet,
     DetailCommande,
 )
+# Initialisation de l'application FastAPI
 app = FastAPI()
 SQLModel.metadata.drop_all(bind=engine)
 SQLModel.metadata.create_all(bind=engine)

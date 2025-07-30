@@ -4,8 +4,9 @@ from sqlmodel import SQLModel, Field
 from typing import Optional
 
 
-"""Schema de base representant les objets disponibles dans la fromagerie."""
+
 class ObjetBase(SQLModel):
+    """Schema de base representant les objets disponibles dans la fromagerie."""
     libobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
     tailleobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
     puobj: Decimal = Field(default=Decimal("0.0000"), nullable=False)
@@ -17,17 +18,20 @@ class ObjetBase(SQLModel):
     points: Optional[int] = Field(default=0)
     o_ordre_aff: Optional[int] = Field(default=0)
 
-"""Table representant les objets disponibles dans la fromagerie."""
+
 class Objet(ObjetBase, table=True):
+    """Table representant les objets disponibles dans la fromagerie."""
     __tablename__ = "t_objet"
     codobj: int | None = Field(default=None, primary_key=True)
 
-"""Schema de validation pour la creation d'un nouvel objet."""
+
 class ObjetPost(ObjetBase):
+    """Schema de validation pour la creation d'un nouvel objet."""
     pass
 
-"""Schema de validation pour la mise à jour d'un objet existant."""
+
 class ObjetPatch(ObjetBase):
+    """Schema de validation pour la mise à jour d'un objet existant."""
     libobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
     tailleobj: Optional[str] = Field(default=None, max_length=50, nullable=True)
     puobj: Optional[Decimal] = Field(default=Decimal("0.0000"), nullable=False)

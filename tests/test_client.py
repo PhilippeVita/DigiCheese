@@ -2,7 +2,7 @@
 
 BASE_URL = "/api/v1/clients"
 
-
+# Tests for the Client Router
 def test_create_client(client, commune_fixture):
     payload = {
         "genrecli": "M",
@@ -24,7 +24,7 @@ def test_create_client(client, commune_fixture):
     assert data["nomcli"] == "New Client"
     assert "codcli" in data
 
-
+# Tests pour avoir tous les clients
 def test_get_all_clients(client, client_fixture):
     response = client.get(BASE_URL)
     assert response.status_code == 200
@@ -35,7 +35,7 @@ def test_get_all_clients(client, client_fixture):
     assert data["results"] == len(data["data"])
     assert any(cli["nomcli"] == "Client Test" for cli in data["data"])
 
-
+# Tests pour récupérer un client par son ID
 def test_get_client_by_id(client, client_fixture):
     response = client.get(f"{BASE_URL}/{client_fixture.codcli}")
     assert response.status_code == 200
@@ -46,7 +46,7 @@ def test_get_client_by_id(client, client_fixture):
 
 
 
-
+# Tests pour mettre à jour un client
 def test_delete_client(client, client_fixture):
     client_id = client_fixture.codcli
 
