@@ -120,11 +120,12 @@ def test_objet(test_session):
 
 
 @pytest.fixture
-def test_commande(test_session, client_fixture):
-    # Création d'une commande liée au client existant
+def created_commande(test_session, client_fixture):
     commande = Commande(
         codcli=client_fixture.codcli,
-        datcde=date.today()
+        datcde=date.today(),
+        nbcolis=3,
+        cdeComt="Test commande"
     )
     test_session.add(commande)
     test_session.commit()
