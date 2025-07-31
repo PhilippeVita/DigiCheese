@@ -99,4 +99,4 @@ Les contributions sont bienvenues ! Pour contribuer :
 
 ---
 
-© 2025 DigiCheese - Projet pédagogique de gestion de fidélisation fromagère.
+
