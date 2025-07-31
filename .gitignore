@@ -7,3 +7,9 @@ README.pdf
 annexes/
 consignes_projet_dev_2024_D08.pdf
 img/
+.venv
+.pytest_cache/
+*.db
+.env
+__pycache__/
+*.pyc

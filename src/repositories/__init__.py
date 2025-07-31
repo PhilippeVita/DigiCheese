@@ -2,3 +2,5 @@ from .repository_client import RepositoryClient
 from .repository_commande import RepositoryCommande
 from .repository_detail_commande import RepositoryDetailCommande
 from .repository_objet import RepositoryObjet
+from .repository_commune import RepositoryCommune
+from .repository_departement import RepositoryDepartement

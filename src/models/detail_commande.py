@@ -1,22 +1,26 @@
 from sqlmodel import SQLModel, Field
-"""Schema de base representant les details des commandes."""
+from typing import Optional
+
 class DetailCommandeBase(SQLModel):
-    codcde: int | None = Field(default=None, foreign_key="t_entcde.codcde", index=True, nullable=True)
-    qte: int = Field(default=1, nullable=True)
-    colis: int = Field(default=1, nullable=True)
-    commentaire: str | None = Field(default=None, max_length=100, nullable=True)
+    """Schéma de base représentant les détails d'une commande."""
+    qte: Optional[int] = Field(default=1, nullable=True)
+    codcde: Optional[int] = Field(foreign_key="t_entcde.codcde")
+    codobj: Optional[int] = Field(foreign_key="t_objet.codobj")  
+    colis: Optional[int] = Field(default=1, nullable=True)
+    commentaire: Optional[str] = Field(default=None, max_length=100, nullable=True)
 
-
-"""Table representant les details des commandes."""
 class DetailCommande(DetailCommandeBase, table=True):
+    """Table représentant les détails d'une commande."""
     __tablename__ = "t_dticode"
-    id: int | None = Field(default=None, primary_key=True)
+    id: Optional[int] = Field(default=None, primary_key=True)
 
 class DetailCommandePost(DetailCommandeBase):
+    """Schéma de validation pour la création d'un nouveau détail de commande."""
     pass
 
 class DetailCommandePatch(DetailCommandeBase):
-    codcde: int | None = Field(default=None, foreign_key="t_entcde.codcde", index=True, nullable=True)
-    qte: int = Field(default=1, nullable=True)
-    colis: int = Field(default=1, nullable=True)
-    commentaire: str | None = Field(default=None, max_length=100, nullable=True)
+    """Schéma de validation pour la mise à jour d'un détail de commande existant."""
+    pass
+
+
+

@@ -1,32 +1,72 @@
-from fastapi import APIRouter, Depends
-from ..models import Commande, CommandePost, CommandePatch
-from ..database import get_db
-from sqlmodel import Session
-from ..repositories import RepositoryCommande
+from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+from sqlmodel import select, Session
+
+from src.database import engine
+from src.models.commande import Commande, CommandePost, CommandePatch
+
 router_commande = APIRouter()
 
-# ROUTES
-@router_commande.get("/")
-def get_commandes(session: Session = Depends(get_db)):
-    commande_repo = RepositoryCommande(session)
-    return commande_repo.get_all_commandes()
+BASE_URL = "/"
 
-@router_commande.get("/{id}")
-def get_commande_by_id(id: int, session: Session = Depends(get_db)):
-    commande_repo = RepositoryCommande(session)
-    return commande_repo.get_commande_by_id(id)
+@router_commande.get(BASE_URL)
+def get_all_commandes():
+    with Session(engine) as session:
+        commandes = session.exec(select(Commande)).all()
+        data = jsonable_encoder(commandes)
+        return JSONResponse(content={"data": data})
 
-@router_commande.post("/")
-def create_commande(commande: CommandePost, session: Session = Depends(get_db)):
-    commande_repo = RepositoryCommande(session)
-    return commande_repo.create_commande(commande)
+@router_commande.get("/{commande_id}")
+def get_commande(commande_id: int):
+    with Session(engine) as session:
+        commande = session.get(Commande, commande_id)
+        if not commande:
+            raise HTTPException(status_code=404, detail="Commande not found")
+        return JSONResponse(content=jsonable_encoder(commande))
 
-@router_commande.patch("/{id}")
-def patch_commande(id: int, commande: CommandePatch, session: Session = Depends(get_db)):
-    commande_repo = RepositoryCommande(session)
-    return commande_repo.update_commande(id, commande)
+@router_commande.post("/", status_code=status.HTTP_201_CREATED)
+def create_commande(commande_post: CommandePost):
+    with Session(engine) as session:
+        commande_data = commande_post.model_dump(exclude_unset=True)
+        commande = Commande(**commande_data)
+        session.add(commande)
+        session.commit()
+        session.refresh(commande)
+        return commande
 
-@router_commande.delete("/{id}")
-def delete_commande(id: int, session: Session = Depends(get_db)):
-    commande_repo = RepositoryCommande(session)
-    return commande_repo.delete_commande(id)
+@router_commande.patch("/{commande_id}")
+def update_commande(commande_id: int, commande_patch: CommandePatch):
+    with Session(engine) as session:
+        commande = session.get(Commande, commande_id)
+        if not commande:
+            raise HTTPException(status_code=404, detail="Commande not found")
+
+        patch_data = commande_patch.model_dump(exclude_unset=True)
+        for key, value in patch_data.items():
+            setattr(commande, key, value)
+
+        session.add(commande)
+        session.commit()
+        session.refresh(commande)
+        return commande
+
+@router_commande.delete("/{commande_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_commande(commande_id: int):
+    with Session(engine) as session:
+        commande = session.get(Commande, commande_id)
+        if not commande:
+            raise HTTPException(status_code=404, detail="Commande not found")
+        session.delete(commande)
+        session.commit()
+        return None
+
+
+
+
+
+
+
+
+
+
