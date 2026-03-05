@@ -6,9 +6,8 @@ from ..models import DetailCommande, DetailCommandePost, DetailCommandePatch
 from ..database import get_session
 from ..repositories import RepositoryDetailCommande
 
-# Ajout du prefix
+# Router pour les détails de commande
 router_detail_commande = APIRouter(
-    prefix="/details-commandes",  
     tags=["detail-commandes"]
 )
 

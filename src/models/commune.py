@@ -1,6 +1,8 @@
 from sqlmodel import SQLModel, Field, Relationship
-from typing import Optional
-from src.models.departement import Departement
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from src.models.departement import Departement
 
 class CommuneBase(SQLModel):
     """Schema de base representant les communes."""
@@ -12,7 +14,7 @@ class Commune(CommuneBase, table=True):
     """Table representant les communes."""
     __tablename__ = "t_communes"
     id: Optional[int] = Field(default=None, primary_key=True)
-    departement: Optional[Departement] = Relationship(back_populates="communes")
+    departement: Optional["Departement"] = Relationship(back_populates="communes")
 
 class CommunePost(CommuneBase):
     """Schema de validation pour la creation d'une nouvelle commune."""

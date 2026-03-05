@@ -21,10 +21,6 @@ class Commande(CommandeBase, table=True):
     __tablename__ = "t_entcde"
     codcde: Optional[int] = Field(default=None, primary_key=True)
 
-    model_config = {
-        "from_attributes": True
-    }
-
 class CommandePost(CommandeBase):
     """Schema de validation pour la creation d'une nouvelle commande."""
     pass

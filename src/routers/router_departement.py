@@ -22,36 +22,40 @@ def get_departements(limit: int = 10, db: Session = Depends(get_session)):
         }
     )
 
-# Récupère un département par son ID
-# Cette méthode récupère un département spécifique par son identifiant
-@router_departement.get("/{id}")
-def get_departement_by_id(id: int, session: Session = Depends(get_session)):
+# Récupère un département par son code
+# Cette méthode récupère un département spécifique par son code
+@router_departement.get("/{code_dept}")
+def get_departement_by_id(code_dept: str, session: Session = Depends(get_session)):
     departement_repo = RepositoryDepartement(session)
-    departement = departement_repo.get_departement_by_id(id)
+    departement = departement_repo.get_departement_by_id(code_dept)
     if not departement:
         raise HTTPException(status_code=404, detail="Département not found")
     return departement
 
 # Crée un nouveau département
 # Cette méthode crée un nouveau département en appliquant des transformations sur les données
-@router_departement.post("/")
+@router_departement.post("/", status_code=status.HTTP_201_CREATED)
 def create_departement(departement: DepartementPost, session: Session = Depends(get_session)):
     departement_repo = RepositoryDepartement(session)
-    departement_repo.create_departement(departement)
-    return {"message": f"Département créé: {departement}"}
+    created = departement_repo.create_departement(departement)
+    return created
 
 # Met à jour un département existant
 # Cette méthode met à jour un département en appliquant des transformations sur les données
-@router_departement.patch("/{id}")
-def patch_departement(id: int, departement: DepartementPatch, session: Session = Depends(get_session)):
+@router_departement.patch("/{code_dept}")
+def patch_departement(code_dept: str, departement: DepartementPatch, session: Session = Depends(get_session)):
     departement_repo = RepositoryDepartement(session)
-    departement_repo.update_departement(id, departement)
-    return {"message": f"Département {id} mis à jour: {departement}"}
+    updated = departement_repo.update_departement(code_dept, departement)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Département not found")
+    return updated
 
-# Supprime un département par son ID
-# Cette méthode supprime un département spécifique par son identifiant
-@router_departement.delete("/{id}")
-def delete_departement(id: int, session: Session = Depends(get_session)):
+# Supprime un département par son code
+# Cette méthode supprime un département spécifique par son code
+@router_departement.delete("/{code_dept}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_departement(code_dept: str, session: Session = Depends(get_session)):
     departement_repo = RepositoryDepartement(session)
-    departement_repo.delete_departement(id)
-    return {"message": f"Département {id} supprimé"}
+    success = departement_repo.delete_departement(code_dept)
+    if not success:
+        raise HTTPException(status_code=404, detail="Département not found")
+    return None

@@ -12,9 +12,9 @@ class RepositoryDepartement:
     def get_all_departements(self, limit: int = 10):
         return self.session.exec(select(Departement).limit(limit)).all()
 
-# Récupère un département par son identifiant
-    def get_departement_by_id(self, departement_id: int):
-        statement = select(Departement).where(Departement.id == departement_id)
+# Récupère un département par son code
+    def get_departement_by_id(self, departement_id: str):
+        statement = select(Departement).where(Departement.code_dept == departement_id)
         return self.session.exec(statement).first()
 
 # Crée un nouveau département

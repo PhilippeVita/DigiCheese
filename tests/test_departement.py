@@ -30,7 +30,7 @@ def test_update_departement(client, departement_fixture):
         "nom_dept": "Ain Modifié",
         "ordre_aff_dept": 10
     }
-    response: Response = client.put(f"{BASE_URL}/{departement_fixture.code_dept}", json=data)
+    response: Response = client.patch(f"{BASE_URL}/{departement_fixture.code_dept}", json=data)
     assert response.status_code == 200
     assert response.json()["nom_dept"] == "Ain Modifié"
 
