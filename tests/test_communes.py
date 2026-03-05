@@ -11,7 +11,7 @@ def test_get_all_communes(client):
 def test_get_commune_by_id(client, commune_fixture):
     response: Response = client.get(f"{BASE_URL}/{commune_fixture.id}")
     assert response.status_code == 200
-    assert response.json()["ville"] == "Bourg-en-Bresse"
+    assert response.json()["ville"] == "Paris"
 
 # Tests pour créer une nouvelle commune
 def test_create_commune(client, departement_fixture):
@@ -31,7 +31,7 @@ def test_update_commune(client, commune_fixture):
         "cp": "01000",
         "ville": "Ville Modifiée"
     }
-    response: Response = client.put(f"{BASE_URL}/{commune_fixture.id}", json=data)
+    response: Response = client.patch(f"{BASE_URL}/{commune_fixture.id}", json=data)
     assert response.status_code == 200
     assert response.json()["ville"] == "Ville Modifiée"
 

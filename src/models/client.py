@@ -18,6 +18,7 @@ class ClientBase(SQLModel):
 
 
 class Client(ClientBase, table=True):
+    __tablename__ = "t_client"
     codcli: Optional[int] = Field(default=None, primary_key=True)
 
 

@@ -1,14 +1,14 @@
 import os
 import sys
+
+# Définir le mode test AVANT les imports de l'application
+os.environ["TESTING"] = "true"
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlmodel import SQLModel, Session, create_engine
 from dotenv import load_dotenv
 from datetime import date
-
-
-# Ajout du dossier source au path
-# sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.models import Client, Commande, DetailCommande, Objet, Commune, Departement
 from src.main import app
@@ -111,18 +111,17 @@ def test_commande(test_session, client_fixture):
 @pytest.fixture
 def test_objet(test_session):
     objet = Objet(
-        codobj=None,  
+        codobj=None,
         libobj="Test Objet",
-        description="Description de test",  
+        tailleobj="Medium",
         puobj=10.0,
+        poidsobj=0.5,
         indispobj=0,
-        tailleobj=None,
-        points=0,
-        poidsobj=0,
+        o_imp=0,
         o_aff=0,
         o_cartp=0,
+        points=0,
         o_ordre_aff=0,
-        o_imp=0,
     )
     test_session.add(objet)
     test_session.commit()

@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends
+from fastapi.encoders import jsonable_encoder
 from ..models import Objet, ObjetPost, ObjetPatch
 from ..database import get_session
 from sqlmodel import Session
@@ -20,7 +21,7 @@ def get_objets(session: Session = Depends(get_session)):
         content={
             "status": "success",
             "results": len(objets),
-            "data": objets
+            "data": jsonable_encoder(objets)
         }
     )
 
@@ -36,7 +37,7 @@ def get_objet_by_id(id: int, session: Session = Depends(get_session)):
 
 # Crée un nouvel objet
 # Cette méthode crée un nouvel objet en appliquant des transformations sur les données
-@router_objet.post("/")
+@router_objet.post("/", status_code=status.HTTP_201_CREATED)
 def create_objet(objet: ObjetPost, session: Session = Depends(get_session)):
     objet_repo = RepositoryObjet(session)
     return objet_repo.create_objet(objet)
@@ -50,8 +51,10 @@ def patch_objet(id: int, objet: ObjetPatch, session: Session = Depends(get_sessi
 
 # Supprime un objet par son ID
 # Cette méthode supprime un objet spécifique par son identifiant
-@router_objet.delete("/{id}")
+@router_objet.delete("/{id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_objet(id: int, session: Session = Depends(get_session)):
     objet_repo = RepositoryObjet(session)
-    objet_repo.delete_objet(id)
-    return {"message": f"Objet {id} supprimé"}
+    success = objet_repo.delete_objet(id)
+    if not success:
+        raise HTTPException(status_code=404, detail="Objet not found")
+    return None

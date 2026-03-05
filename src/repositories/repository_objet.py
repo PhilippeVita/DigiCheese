@@ -15,7 +15,7 @@ class RepositoryObjet:
 
 # Récupère un objet par son identifiant
     def get_objet_by_id(self, objet_id: int):
-        statement = select(Objet).where(Objet.id == objet_id)
+        statement = select(Objet).where(Objet.codobj == objet_id)
         return self.session.exec(statement).first()
 
 # Crée un nouvel objet

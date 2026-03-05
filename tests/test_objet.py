@@ -23,7 +23,8 @@ def test_create_objet(client):
 def test_get_all_objets(client, test_objet):
     response: Response = client.get(BASE_URL)
     assert response.status_code == 200
-    assert any(o["codobj"] == test_objet.codobj for o in response.json())
+    data = response.json()["data"]
+    assert any(o["codobj"] == test_objet.codobj for o in data)
 
 # Tests pour obtenir un objet par son ID
 def test_get_objet_by_id(client, test_objet):
@@ -33,7 +34,7 @@ def test_get_objet_by_id(client, test_objet):
 
 # Tests pour mettre à jour un objet
 def test_update_objet(client, test_objet):
-    response: Response = client.put(f"{BASE_URL}/{test_objet.codobj}", json={
+    response: Response = client.patch(f"{BASE_URL}/{test_objet.codobj}", json={
         "libobj": "Objet Modifié",
         "tailleobj": "L",
         "puobj": 25.0,
